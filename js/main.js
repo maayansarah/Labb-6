@@ -12,6 +12,7 @@ const errorEl = document.querySelector("#error");
 formEl.addEventListener("submit", function (event) {
   event.preventDefault();
   if (validateForm()) {
+    fetchRecipe();
   }
 });
 
@@ -21,6 +22,7 @@ let error = "";
 // Funktion för validering
 function validateForm() {
   console.log("Validerar formulär");
+  errorEl.innerHTML = "";
 
   const searchFieldInputValue = searchFieldInputEl.value.trim();
   if (searchFieldInputValue === "") {
@@ -35,11 +37,18 @@ function validateForm() {
 
 // Funktion för att visa felmeddelanden
 function displayError() {
-  errorEl.innerHTML = "";
-
   console.log("Visar felmeddelanden");
 
   const paragraphEl = document.createElement("p");
   paragraphEl.textContent = error;
   errorEl.appendChild(paragraphEl);
+}
+
+// Funktion för hämtning av API
+async function fetchRecipe() {
+  console.log("Hämtar recept");
+
+  await fetch("https://dummyjson.com/recipes?limit=1&select=name,image")
+    .then((res) => res.json())
+    .then(console.log);
 }
