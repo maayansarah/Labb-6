@@ -3,16 +3,19 @@
  * Laboration 6 - Receptsökaren
  * Namn: Maayan Grolman
  */
+
 // Element från DOM
 const formEl = document.querySelector("#searchform");
 const searchFieldInputEl = document.querySelector("#search");
 const errorEl = document.querySelector("#error");
+const messageSectionEl = document.querySelector("#message");
 
 // Eventlyssnare
 formEl.addEventListener("submit", function (event) {
   event.preventDefault();
   if (validateForm()) {
-    fetchRecipe();
+    const searchFieldInputValue = searchFieldInputEl.value.trim();
+    const recipe = fetchRecipe(searchFieldInputValue);
   }
 });
 
@@ -45,10 +48,19 @@ function displayError() {
 }
 
 // Funktion för hämtning av API
-async function fetchRecipe() {
+async function fetchRecipe(searchValue) {
   console.log("Hämtar recept");
 
-  await fetch("https://dummyjson.com/recipes?limit=1&select=name,image")
-    .then((res) => res.json())
-    .then(console.log);
+  try {
+    const response = await fetch(
+      `https://dummyjson.com/recipes/search?q=${searchValue}`,
+    );
+
+    const data = await response.json();
+    console.log(data);
+
+    return data.recipes[0];
+  } catch (error) {
+    console.log(error);
+  }
 }
