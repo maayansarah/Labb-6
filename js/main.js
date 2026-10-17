@@ -75,5 +75,10 @@ async function fetchRecipes(searchValue) {
 // Funktion för att visa recept
 async function displayRecipe(recipes) {
   console.log(recipes);
+
+  // Om något gick fel vid hämtning så kommer ingen array med recept finnas
+  if (!recipes) {
+    return;
+  }
   }
 }
