@@ -9,13 +9,15 @@ const formEl = document.querySelector("#searchform");
 const searchFieldInputEl = document.querySelector("#search");
 const errorEl = document.querySelector("#error");
 const messageSectionEl = document.querySelector("#message");
+const recipeSectionEl = document.querySelector("#recipe");
 
 // Eventlyssnare
-formEl.addEventListener("submit", function (event) {
+formEl.addEventListener("submit", async function (event) {
   event.preventDefault();
   if (validateForm()) {
     const searchFieldInputValue = searchFieldInputEl.value.trim();
-    const recipe = fetchRecipe(searchFieldInputValue);
+    const recipes = await fetchRecipes(searchFieldInputValue);
+    displayRecipe(recipes);
   }
 });
 
@@ -48,10 +50,10 @@ function displayError() {
 }
 
 // Funktion för hämtning av API
-async function fetchRecipe(searchValue) {
+async function fetchRecipes(searchValue) {
   console.log("Hämtar recept");
   messageSectionEl.innerHTML = "";
-
+  recipeSectionEl.innerHTML = "";
   try {
     const response = await fetch(
       `https://dummyjson.com/recipes/search?q=${searchValue}`,
@@ -60,7 +62,7 @@ async function fetchRecipe(searchValue) {
     const data = await response.json();
     console.log(data);
 
-    return data.recipes[0];
+    return data.recipes;
   } catch (error) {
     console.log(error);
 
@@ -68,5 +70,8 @@ async function fetchRecipe(searchValue) {
     messageEl.innerHTML = "Något gick fel. Försök igen";
     messageSectionEl.appendChild(messageEl);
   }
+// Funktion för att visa recept
+async function displayRecipe(recipes) {
+  console.log(recipes);
   }
 }
