@@ -40,7 +40,7 @@ function validateForm() {
   return true;
 }
 
-// Funktion för att visa felmeddelanden
+// Funktion för att visa felmeddelande
 function displayError() {
   console.log("Visar felmeddelanden");
 
@@ -70,6 +70,8 @@ async function fetchRecipes(searchValue) {
     messageEl.innerHTML = "Något gick fel. Försök igen";
     messageSectionEl.appendChild(messageEl);
   }
+}
+
 // Funktion för att visa recept
 async function displayRecipe(recipes) {
   console.log(recipes);
