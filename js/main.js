@@ -80,10 +80,77 @@ async function displayRecipe(recipes) {
   if (!recipes) {
     return;
   }
+
   if (recipes.length === 0) {
     const messageEl = document.createElement("p");
     messageEl.innerHTML = "Inget recept hittades";
     messageSectionEl.appendChild(messageEl);
-  }
+  } else {
+    // Visa det första receptet
+    const recipe = recipes[0];
+
+    const articleEl = document.createElement("article");
+    const imgEl = document.createElement("img");
+    const divEl = document.createElement("div");
+    divEl.className = "recipe-info";
+
+    // namn på recept
+    const nameEl = document.createElement("h3");
+    nameEl.textContent = `${recipe.name}`;
+    articleEl.appendChild(nameEl);
+
+    // bild
+    imgEl.src = recipe.image;
+    imgEl.alt = recipe.name;
+    articleEl.appendChild(imgEl);
+
+    // info
+    const servingsEl = document.createElement("p");
+    servingsEl.textContent = `Servings: ${recipe.servings}`;
+    divEl.appendChild(servingsEl);
+
+    const prepTimeMinutesEl = document.createElement("p");
+    prepTimeMinutesEl.textContent = `Prep time: ${recipe.prepTimeMinutes} minutes`;
+    divEl.appendChild(prepTimeMinutesEl);
+
+    const cookTimeMinutesEl = document.createElement("p");
+    cookTimeMinutesEl.textContent = `Cook time: ${recipe.cookTimeMinutes} minutes`;
+    divEl.appendChild(cookTimeMinutesEl);
+
+    const difficultyEl = document.createElement("p");
+    difficultyEl.textContent = `Difficulty: ${recipe.difficulty}`;
+    divEl.appendChild(difficultyEl);
+
+    articleEl.appendChild(divEl);
+
+    // ingredienser
+    const ingredientsHeadEl = document.createElement("h4");
+    ingredientsHeadEl.textContent = `Ingredients: `;
+    articleEl.appendChild(ingredientsHeadEl);
+
+    const ulEl = document.createElement("ul");
+    recipe.ingredients.forEach((step) => {
+      const liEl = document.createElement("li");
+      liEl.textContent = step;
+      ulEl.appendChild(liEl);
+
+      articleEl.appendChild(ulEl);
+    });
+
+    // intruktioner
+    const instructionsHeadEl = document.createElement("h4");
+    instructionsHeadEl.textContent = `Instructions: `;
+    articleEl.appendChild(instructionsHeadEl);
+
+    const olEl = document.createElement("ol");
+    recipe.instructions.forEach((step) => {
+      const liEl = document.createElement("li");
+      liEl.textContent = step;
+      olEl.appendChild(liEl);
+
+      articleEl.appendChild(olEl);
+    });
+
+    recipeSectionEl.appendChild(articleEl);
   }
 }
