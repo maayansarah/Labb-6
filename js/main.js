@@ -80,5 +80,10 @@ async function displayRecipe(recipes) {
   if (!recipes) {
     return;
   }
+  if (recipes.length === 0) {
+    const messageEl = document.createElement("p");
+    messageEl.innerHTML = "Inget recept hittades";
+    messageSectionEl.appendChild(messageEl);
+  }
   }
 }
