@@ -50,6 +50,7 @@ function displayError() {
 // Funktion för hämtning av API
 async function fetchRecipe(searchValue) {
   console.log("Hämtar recept");
+  messageSectionEl.innerHTML = "";
 
   try {
     const response = await fetch(
@@ -62,5 +63,10 @@ async function fetchRecipe(searchValue) {
     return data.recipes[0];
   } catch (error) {
     console.log(error);
+
+    const messageEl = document.createElement("p");
+    messageEl.innerHTML = "Något gick fel. Försök igen";
+    messageSectionEl.appendChild(messageEl);
+  }
   }
 }
